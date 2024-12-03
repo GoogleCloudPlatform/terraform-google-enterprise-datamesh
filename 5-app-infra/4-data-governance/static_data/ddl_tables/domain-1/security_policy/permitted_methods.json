@@ -1,0 +1,5 @@
+{"sensitive_category":"Personal_Identifiable_Information","geographical_region":"us-central1","encrypt_methods":["CMEK+HSM","EKM"],"platform_deid_methods":["SHA256Hash","Nullify","Default Masking Value"]}
+{"sensitive_category":"Sensitive_Personal_Identifiable_Information","geographical_region":"us-central1","encrypt_methods":["CMEK+HSM","EKM"],"platform_deid_methods":["SHA256Hash","Nullify","Default Masking Value"]}
+{"sensitive_category":"Personal_Information","geographical_region":"us-central1","encrypt_methods":["CMEK+HSM","EKM"],"platform_deid_methods":["SHA256Hash","Nullify","Default Masking Value"]}
+{"sensitive_category":"Public_Information","geographical_region":"us-central1","encrypt_methods":[],"platform_deid_methods":[]}
+{"sensitive_category":"Sensitive_Personal_Information","geographical_region":"us-central1","encrypt_methods":["CMEK+HSM","EKM"],"platform_deid_methods":["SHA256Hash","Nullify","Default Masking Value"]}

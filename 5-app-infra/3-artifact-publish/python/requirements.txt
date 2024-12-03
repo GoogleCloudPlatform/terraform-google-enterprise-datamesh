@@ -1,0 +1,4 @@
+apache-beam[gcp]==2.54.0
+google-cloud-dlp==3.12.2
+tink[gcpkms]==1.10.0
+google-cloud-secret-manager==2.20.2

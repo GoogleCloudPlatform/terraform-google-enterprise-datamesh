@@ -1,0 +1,5 @@
+{"notable_infotypes":["IP_ADDRESS","LOCATION","ETHNIC_GROUP"],"classification_result":"Personal_Information","sensitivity_rank":"1"}
+{"notable_infotypes":["PERSON_NAME","EMAIL_ADDRESS","STREET_ADDRESS","AGE","DATE_OF_BIRTH","ETHNIC_GROUP","PHONE_NUMBER"],"classification_result":"Personal_Identifiable_Information","sensitivity_rank":"2"}
+{"notable_infotypes":["PERSON_NAME","EMAIL_ADDRESS","STREET_ADDRESS","AGE","DATE_OF_BIRTH","CREDIT_CARD_NUMBER","SOCIAL_SECURITY_NUMBER","US_DRIVERS_LICENSE_NUMBER","UK_DRIVERS_LICENSE_NUMBER","JAPAN_DRIVERS_LICENSE_NUMBER","PASSWORD","LOCATION_COORDINATES","PHONE_NUMBER"],"classification_result":"Sensitive_Personal_Identifiable_Information","sensitivity_rank":"3"}
+{"notable_infotypes":["STREET_ADDRESS"],"classification_result":"Public_Information","sensitivity_rank":"0"}
+{"notable_infotypes":["CREDIT_CARD_NUMBER","SOCIAL_SECURITY_NUMBER","US_DRIVERS_LICENSE_NUMBER","UK_DRIVERS_LICENSE_NUMBER","JAPAN_DRIVERS_LICENSE_NUMBER","PASSWORD","LOCATION_COORDINATES"],"classification_result":"Sensitive_Personal_Information","sensitivity_rank":"2"}

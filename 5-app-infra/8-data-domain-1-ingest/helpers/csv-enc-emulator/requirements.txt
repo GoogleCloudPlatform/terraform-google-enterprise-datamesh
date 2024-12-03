@@ -1,0 +1,2 @@
+tink[gcpkms]==1.10.0
+google-cloud-secret-manager==2.20.2

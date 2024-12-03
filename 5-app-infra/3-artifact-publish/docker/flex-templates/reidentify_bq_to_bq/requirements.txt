@@ -1,0 +1,2 @@
+apache-beam[gcp]==2.54.0  # Must match the version in `Dockerfile``.
+google-cloud-dlp==3.12.2

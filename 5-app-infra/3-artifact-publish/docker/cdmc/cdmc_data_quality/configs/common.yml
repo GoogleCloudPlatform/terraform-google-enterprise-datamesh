@@ -1,0 +1,26 @@
+rules:
+  UNIQUE:
+    rule_type: CUSTOM_SQL_STATEMENT
+    dimension: duplication
+    params:
+      custom_sql_statement: |-
+        select $column from data
+        group by $column
+        having count(*) > 1
+
+  NOT_NULL_SIMPLE:
+    rule_type: NOT_NULL
+    dimension: completeness
+
+row_filters:
+  NONE:
+    filter_sql_expr: |-
+      True
+
+rule_dimensions:
+  - consistency
+  - correctness
+  - duplication
+  - completeness
+  - conformance
+  - integrity

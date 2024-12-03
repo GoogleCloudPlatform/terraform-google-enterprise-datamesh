@@ -1,0 +1,13 @@
+{
+    input_topic                     =   "projects/[INGST_PROJECT_ID]/topics/[TOPIC_NAME]"
+    dlp_project                     =   "[GOVERNANCE_PROJECT_ID]" 
+    deidentification_template_name  =   "projects/[GOVERNANCE_PROJECT_ID]/locations/us-central1/deidentifyTemplates/[TEMPLATE_ID]" 
+    dlp_location                    =   "us-central1" 
+    output_table                    =   "[NCNF_PROJECT_ID].[DATASET_ID].[TABLE_ID]" 
+    bq_schema                       =   "Card_Type_Code:STRING,Card_Type_Full_Name:STRING,Issuing_Bank:STRING,Card_Number:STRING,Card_Holders_Name:STRING,CVV_CVV2:STRING,Issue_Date:STRING,Expiry_Date:STRING,Billing_Date:STRING,Card_PIN:STRING,Credit_Limit:STRING" 
+    window_interval_sec             =   30
+    batch_size                      =   1000
+    cryptoKeyName                   =   "projects/[KMS_PROJECT_ID]/locations/us-central1/keyRings/sample-keyring/cryptoKeys/deidenfication_key_common" 
+    wrappedKey                      =   "projects/[SECRETS_PROJECT_ID]/secrets/kms-wrapper/versions/1" 
+    sdk_container_image             =   "us-central1-docker.pkg.dev/[ARTIFACTS_PROJECT_ID]/flex-templates/samples/pubsub_to_bq_deidentification:development"
+}

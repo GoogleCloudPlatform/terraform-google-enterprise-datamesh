@@ -1,0 +1,22 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "event_uuid",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "asset_name",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "event_timestamp",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "sensitive",
+    "type": "BOOLEAN"
+  }
+]

@@ -1,0 +1,9 @@
+{
+    "source_projects": ["${project_id_data}"],
+	"source_region": "${region}",
+	"target_project": "${project_id_gov}",
+	"target_dataset": "tag_exports",
+	"target_region": "${region}",
+	"write_option": "truncate",
+    "refresh_mode": "ON_DEMAND"
+}

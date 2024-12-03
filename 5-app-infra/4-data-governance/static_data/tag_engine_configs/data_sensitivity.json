@@ -1,0 +1,22 @@
+{
+    "template_id": "data_sensitivity",
+    "template_project": "${project_id_gov}",
+    "template_region": "${region}",
+    "fields": [
+        {
+            "field_id": "sensitive_field"
+        },
+        {
+            "field_id": "sensitive_type"
+        }
+    ],
+    "dlp_dataset": "bigquery/project/${project_id_gov}/dataset/${resulting_dataset_id}",
+	"infotype_selection_table": "bigquery/project/${project_id_gov}/dataset/data_classification_${domain_name}_${env_short_form}/infotype_selection",
+	"infotype_classification_table": "bigquery/project/${project_id_gov}/dataset/data_classification_${domain_name}_${env_short_form}/infotype_classification",
+	"included_tables_uris": "bigquery/project/${project_id_data}/dataset/${inspection_dataset_id}/*",
+    "create_policy_tags": true,
+    "taxonomy_id": "${taxonomy_id}",
+    "refresh_mode": "ON_DEMAND",
+    "tag_history": true,
+    "tag_stream": false
+}

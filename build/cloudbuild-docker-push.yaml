@@ -1,0 +1,123 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+timeout: 1800s
+steps:
+  - name: "gcr.io/cloud-builders/git"
+    id: "unshallow"
+    entrypoint: "/bin/bash"
+    secretEnv: ['GITHUB_TOKEN']
+    args: 
+      - "-c"
+      - |
+        git remote set-url origin https://$${GITHUB_TOKEN}@${_REPO_URL}
+        git fetch --unshallow
+        git fetch --all
+
+  - name: "gcr.io/cloud-builders/git"
+    id: "find-folders-affected-by-pr"
+    entrypoint: "/bin/bash"
+    args:
+      - "-c"
+      - |
+        changed_docker_folders=$(git diff --name-only ${COMMIT_SHA}^1 -r | grep "^docker/" | awk -F/ '{print $1 "/" $2 "/" $3}' | sort | uniq)
+        for folder in $changed_docker_folders; do
+          echo "Found change in: $folder"
+          echo $folder >> /workspace/docker_folder
+        done
+  - name: 'gcr.io/cloud-builders/git'
+    entrypoint: '/bin/bash'
+    id: 'set-tag-engine-oauth-token'
+    secretEnv: ['TAG_ENGINE_OAUTH_TOKEN']
+    args:
+      - '-c'
+      - |
+        build_paths="/workspace/docker_folder"
+        while IFS= read -r line; do
+          if [[ $line == *"cdmc/tag_engine"* ]]; then
+            echo "adding te_client_secret.json to $line"
+            echo $${TAG_ENGINE_OAUTH_TOKEN} > ${line}/te_client_secret.json
+          fi
+        done < "$build_paths"
+  - name: "gcr.io/cloud-builders/docker"
+    id: "build"
+    entrypoint: "/bin/bash"
+    args:
+      - "-c"
+      - |
+        build_paths="/workspace/docker_folder"
+        while IFS= read -r line; do
+          echo "Building: $line"
+          image_name=$(echo $line | awk -F/ '{print $3}')
+          if [[ $line == *"flex-templates"* ]]; then
+            docker build \
+              --tag ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${SHORT_SHA} \
+              --tag ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${_ENVIRONMENT} \
+              --build-arg=ARG_PIP_INDEX_URL=https://${_REGION}-python.pkg.dev/${PROJECT_ID}/${_PYTHON_ARTIFACT_REPO_NAME}/simple/ \
+              $line
+          elif [[ $line == *"cdmc"* ]]; then
+            docker build \
+              --tag ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_CDMC_REPO_NAME}/cdmc/$image_name:${SHORT_SHA} \
+              --tag ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_CDMC_REPO_NAME}/cdmc/$image_name:${_ENVIRONMENT} \
+              $line
+          fi
+        done < "$build_paths"
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push'
+    entrypoint: '/bin/bash'
+    args: 
+      - '-c'
+      - |
+        build_paths="/workspace/docker_folder"
+        while IFS= read -r line; do
+          echo "Pushing: $line"
+          image_name=$(echo $line | awk -F/ '{print $3}')
+          if [[ $line == *"flex-templates"* ]]; then
+            docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${SHORT_SHA}
+            docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${_ENVIRONMENT}
+          elif [[ $line == *"cdmc"* ]]; then
+            docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_CDMC_REPO_NAME}/cdmc/$image_name:${SHORT_SHA}
+            docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_CDMC_REPO_NAME}/cdmc/$image_name:${_ENVIRONMENT}
+          fi
+        done < "$build_paths"
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: '/bin/bash'
+    id: 'create-flex-template'
+    args:
+      - '-c'
+      - |
+        build_paths="/workspace/docker_folder"
+        while IFS= read -r line; do
+          image_name=$(echo $line | awk -F/ '{print $3}')
+          if [[ $line == *"flex-templates"* ]]; then
+            gcloud dataflow flex-template build ${_TEMPLATE_BUCKET_NAME}/flex-template-samples/$image_name-${SHORT_SHA}.json \
+              --image ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${SHORT_SHA} \
+              --sdk-language PYTHON \
+              --metadata-file $line/metadata.json
+            gcloud dataflow flex-template build ${_TEMPLATE_BUCKET_NAME}/flex-template-samples/$image_name-${_ENVIRONMENT}.json \
+              --image ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_ARTIFACT_FLEX_REPO_NAME}/samples/$image_name:${_ENVIRONMENT} \
+              --sdk-language PYTHON \
+              --metadata-file $line/metadata.json
+          else
+            echo "Skipping: $line"
+          fi
+        done < "$build_paths"
+options:
+  logging: CLOUD_LOGGING_ONLY
+availableSecrets:
+  secretManager: 
+    - versionName: ${_SECRET_MANAGER_VERSION}
+      env: 'GITHUB_TOKEN'
+    - versionName: ${_TAG_ENGINE_SECRET_VERSION}
+      env: 'TAG_ENGINE_OAUTH_TOKEN'

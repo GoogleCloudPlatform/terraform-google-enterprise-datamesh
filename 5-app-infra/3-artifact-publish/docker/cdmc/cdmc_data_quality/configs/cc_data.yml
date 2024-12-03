@@ -1,0 +1,135 @@
+rules:
+  UNIQUE_CARD_NUMBER:
+    rule_type: CUSTOM_SQL_STATEMENT
+    dimension: duplication
+    params:
+      custom_sql_statement: |-
+        select Card_Number, count(*) from data
+        group by Card_Number
+        having count(*) > 1
+
+  GREATER_THAN_ZERO_CREDIT_LIMIT:
+    rule_type: CUSTOM_SQL_EXPR
+    dimension: conformance
+    params:
+      custom_sql_expr: |-
+        CAST(Credit_Limit AS FLOAT64) > 0
+
+  ALLOWED_CARD_TYPE_CODE:
+    rule_type: CUSTOM_SQL_EXPR
+    dimension: conformance
+    params:
+      custom_sql_expr: |-
+        $column in ('AX', 'JC', 'MC', 'DC', 'VI')
+
+entities:
+  CREDIT_CARD_INFO:
+    source_database: BIGQUERY
+    table_name: cc_data
+    dataset_name: SOURCE_BIGQUERY_DATASET_ID
+    project_name: PROJECT_ID_DATA
+    columns:
+      CARD_TYPE_CODE:
+        name: Card_Type_Code
+        data_type: STRING
+        description: |-
+          Short code for the card type.
+      CARD_TYPE_FULL_NAME:
+        name: Card_Type_Full_Name
+        data_type: STRING
+        description: |-
+          Full name of the card type.
+      ISSUING_BANK:
+        name: Issuing_Bank
+        data_type: STRING
+        description: |-
+          Bank that issued the card.
+      CARD_NUMBER:
+        name: Card_Number
+        data_type: STRING
+        description: |-
+          The credit card number.
+      CARD_HOLDERS_NAME:
+        name: Card_Holders_Name
+        data_type: STRING
+        description: |-
+          The name of the cardholder.
+      CVV_CVV2:
+        name: CVV_CVV2
+        data_type: STRING
+        description: |-
+          CVV or CVV2 number of the card.
+      ISSUE_DATE:
+        name: Issue_Date
+        data_type: STRING
+        description: |-
+          The issue date of the card.
+      EXPIRY_DATE:
+        name: Expiry_Date
+        data_type: STRING
+        description: |-
+          The expiry date of the card.
+      BILLING_DATE:
+        name: Billing_Date
+        data_type: STRING
+        description: |-
+          The day of the month when the bill is generated.
+      CARD_PIN:
+        name: Card_PIN
+        data_type: STRING
+        description: |-
+          The PIN number of the card.
+      CREDIT_LIMIT:
+        name: Credit_Limit
+        data_type: STRING
+        description: |-
+          The credit limit of the card.
+
+rule_bindings:
+  CARD_NUMBER_VALIDATIONS:
+    entity_id: CREDIT_CARD_INFO
+    column_id: CARD_NUMBER
+    row_filter_id: NONE
+    rule_ids:
+      - UNIQUE_CARD_NUMBER
+      - NOT_NULL_SIMPLE
+    metadata:
+      team: data-quality
+
+  CVV_VALIDATIONS:
+    entity_id: CREDIT_CARD_INFO
+    column_id: CVV_CVV2
+    row_filter_id: NONE
+    rule_ids:
+      - NOT_NULL_SIMPLE
+    metadata:
+      team: data-quality
+
+  EXPIRY_DATE_VALIDATIONS:
+    entity_id: CREDIT_CARD_INFO
+    column_id: EXPIRY_DATE
+    row_filter_id: NONE
+    rule_ids:
+      - NOT_NULL_SIMPLE
+    metadata:
+      team: data-quality
+
+  CREDIT_LIMIT_VALIDATIONS:
+    entity_id: CREDIT_CARD_INFO
+    column_id: CREDIT_LIMIT
+    row_filter_id: NONE
+    rule_ids:
+      - GREATER_THAN_ZERO_CREDIT_LIMIT
+    metadata:
+      team: data-quality
+
+  CARD_TYPE_CODE_VALIDATIONS:
+    entity_id: CREDIT_CARD_INFO
+    column_id: CARD_TYPE_CODE
+    row_filter_id: NONE
+    rule_ids:
+      - ALLOWED_CARD_TYPE_CODE
+    metadata:
+      team: data-quality
+
+

@@ -1,0 +1,13 @@
+SELECT  
+    distinct(isv.data_asset) as data_asset
+FROM 
+    `$project_id.{0}._information_schema_view` isv,
+    `$project_id.{0}.data_asset` da
+WHERE
+    isv.data_asset like concat(replace(da.data_asset_name, '*', ''), '%')
+    and cast(isv.user_id as STRING) != da.data_owner_email
+    and isv.value is not NULL
+    and isv.user_id not in 
+       (SELECT ca.user_email 
+        FROM `$project_id.{0}.consumer_agreement` ca
+        WHERE CAST(ca.use_id as STRING) = isv.value)

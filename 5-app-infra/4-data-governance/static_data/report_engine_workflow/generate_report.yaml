@@ -1,0 +1,9 @@
+main:
+  steps:
+    - make_curl_request:
+        call: http.post
+        args:
+          url: "${uri}/generate?orgId=${organization_id}&projectId=${data_domain_project_id}&topicProjectId=${project_id}&topic=${cdmc_controls_topic}&projectNumber=${data_domain_project_number}&controls=${controls}"
+          auth:
+            type: OIDC
+            audience: ${uri}

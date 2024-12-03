@@ -1,0 +1,1 @@
+{"data_asset_id":"${dataset_id}","data_asset_name":"${PROJECT_ID_DATA}.${dataset_id}.*","data_owner_name":"${data_owner_name}","data_owner_email":"${data_owner_email}","is_sensitive":${is_sensitive},"sensitive_category":"${sensitive_category}","is_authoritative":${is_authoritative}}

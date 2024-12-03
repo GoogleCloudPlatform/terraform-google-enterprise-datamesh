@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+  <head>
+    <title>Tag Engine for Data Catalog</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+  </head>
+  {% if settings == 1 %}
+  <table><tr><td>
+  &nbsp;<span style="color:green;">Settings Saved!</span>
+   </td></tr></table><p>
+  {% endif %}  
+    <body>
+	   <div class="pagetitle">
+	   <h1>Update Config</h1>
+        </div>
+	   
+    	  <table>
+    		  <tr><td>&nbsp;<span style="color:#0b5394;">Config Id:</span> {{ config['config_uuid'] }}</td></tr> 
+    		  <tr><td>&nbsp;<span style="color:#0b5394;">Config Status:</span> {{ config['config_status'] }}</td></tr> 
+    		  <tr><td>&nbsp;<span style="color:#0b5394;">Config Type:</span> {{ config['config_type'] }}</td></tr>
+    	  </table>   
+			   
+		<h5>Mandatory fields in this form are marked by <span style="color:red;">*</span></h5>
+
+	   </div>
+	   <form method="post" action="/process_import_config"> 
+
+	   <h3>Tag Template Details</h3>
+   	<table> 
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Id:&nbsp;</td>
+	   <td style="width: 150px;padding: 3px;">
+       	  {{ config['template_id'] }} 		 
+       </td>
+       </tr>
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Project:&nbsp;</td>
+	   <td style="width: 150px;padding: 3px;">
+       	  {{ config['template_project'] }}			 
+       </td>
+       </tr>
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Region:&nbsp;</td>
+	   <td style="width: 150px;padding: 3px;">
+       	  {{ config['template_region'] }}			 
+       </td>
+       </tr>
+       </table>
+		<p>&nbsp;</p>
+		   <h3>Data Asset Details</h3>
+	   	<table> 
+	   	<tr>
+	       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Data Asset Type:&nbsp;</td>
+		   <td style="width: 150px;padding: 3px;">
+	       	  {{ config['data_asset_type'] }} 		 
+	       </td>
+	       </tr>
+	   	<tr>
+	       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Data Asset Region:&nbsp;</td>
+		   <td style="width: 150px;padding: 3px;">
+	       	  {{ config['data_asset_region'] }}			 
+	       </td>
+	    </tr>
+	   </table>
+	   <p>&nbsp;</p>  
+		<h3>GCS Path to CSV Files</h3>
+		 	   <h5>		   
+  			  
+			   &nbsp;&nbsp;If you have multiple files to upload, use a comma-separated list. Example: gs://bucket/folder/tags1.csv, 
+			   			   gs://bucket/folder/tags2.csv, etc.
+
+		   		</h5>
+					    <table>
+				     <tr>
+				    <td><span style="color:red;">*</span>&nbsp;Location of metadata import file(s):&nbsp;&nbsp;
+				    	  <input type="text" value="{{ config['metadata_import_location'] }}" name="metadata_import_location" style="align-content:left; width: 700px; overflow:auto;"/>
+
+				    	</td>
+				     </tr>
+			    </table>
+				
+		    <p>&nbsp;</p>
+			<h3>Tag History Option</h3>
+		    <table>
+		    <tr><td>
+			    {% if config['tag_history'] == True %} 
+			    		ON
+			    {% else %}
+			         	OFF
+			    {% endif %}   
+		    </td></tr>
+		    </table>	
+			    
+	         <p>&nbsp;</p>
+		        <table>
+		        <tr>
+			   <td><input type="submit" value="Save Config" name="action">
+			       <input type="submit" value="Cancel Changes" name="action">
+   	        	   <input type="submit" value="View Config List" name="action">
+			   </td>
+		        </tr>
+			   </table>
+			   <input type="hidden" name="template_id" value="{{ config['template_id'] }}">
+			   <input type="hidden" name="template_project" value="{{ config['template_project'] }}">
+			   <input type="hidden" name="template_region" value="{{ config['template_region'] }}">
+			   <input type="hidden" name="service_account" value="{{ service_account }}">
+			   <input type="hidden" name="config_uuid" value="{{ config['config_uuid'] }}">	   
+         </form>
+    </body>
+</html>

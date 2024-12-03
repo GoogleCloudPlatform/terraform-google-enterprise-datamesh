@@ -1,0 +1,3 @@
+{"provider_agreement_id":"300","sharing_scope_legal_entity":"Google Cloud EMEA Limited","sharing_scope_geography":"UK","data_asset_id":"${dataset_id}"}
+{"provider_agreement_id":"400","sharing_scope_legal_entity":"Google LLC","sharing_scope_geography":"US","data_asset_id":"${dataset_id}"}
+{"provider_agreement_id":"500","sharing_scope_legal_entity":"Google Cloud EMEA Limited","sharing_scope_geography":"EU","data_asset_id":"${dataset_id}"}

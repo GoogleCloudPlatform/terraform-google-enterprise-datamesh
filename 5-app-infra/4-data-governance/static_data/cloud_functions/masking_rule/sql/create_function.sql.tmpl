@@ -1,0 +1,5 @@
+CREATE OR REPLACE FUNCTION `${project_id}.${dataset}`.get_${function_name}(project STRING, dataset STRING, table STRING, column STRING) RETURNS STRING
+REMOTE WITH CONNECTION `${project_id}.${region}.${connection}` 
+OPTIONS 
+(endpoint = 'https://${region}-${project_id}.cloudfunctions.net/${function_name}'
+);

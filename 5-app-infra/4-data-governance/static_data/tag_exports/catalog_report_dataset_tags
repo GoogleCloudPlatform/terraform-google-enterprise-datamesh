@@ -1,0 +1,32 @@
+[
+    {
+      "name": "project",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "dataset",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "tag_field",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "tag_template",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "tag_value",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "export_time",
+      "type": "TIMESTAMP",
+      "mode": "NULLABLE"
+    }
+  ]

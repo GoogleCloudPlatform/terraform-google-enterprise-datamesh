@@ -1,0 +1,5 @@
+apache-beam[gcp]==2.54.0  # Must match the version in `Dockerfile``.
+tink[gcpkms]==1.10.0
+google-cloud-secret-manager==2.20.2
+google-cloud-dlp==3.12.2
+

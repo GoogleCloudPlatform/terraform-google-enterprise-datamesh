@@ -1,0 +1,7 @@
+{"field_infotypes":["EMAIL_ADDRESS","PERSON_NAME","FIRST_NAME","LAST_NAME","ETHNIC_GROUP"],"notable_infotype":"EMAIL_ADDRESS"}
+{"field_infotypes":["PERSON_NAME","FIRST_NAME","LAST_NAME","ETHNIC_GROUP"],"notable_infotype":"PERSON_NAME"}
+{"field_infotypes":["DATE_OF_BIRTH"],"notable_infotype":"DATE_OF_BIRTH"}
+{"field_infotypes":["PHONE_NUMBER"],"notable_infotype":"PHONE_NUMBER"}
+{"field_infotypes":["CREDIT_CARD_NUMBER"],"notable_infotype":"CREDIT_CARD_NUMBER"}
+{"field_infotypes":["STREET_ADDRESS","PERSON_NAME","FIRST_NAME","LAST_NAME","ETHNIC_GROUP"],"notable_infotype":"STREET_ADDRESS"}
+{"field_infotypes":["AGE"],"notable_infotype":"AGE"}

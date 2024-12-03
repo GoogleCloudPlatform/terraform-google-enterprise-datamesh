@@ -1,0 +1,63 @@
+{
+    "name": "Streaming BiqQuery data through DLP to transform data flex template",
+    "description": "Python flex template for streaming BiqQuery data through regional DLP to transform the data.",
+    "parameters": [
+      {
+        "name": "query",
+        "label": "SQL query to retrieve input data.",
+        "helpText": "Input query to retrieve data from Dataset. Example: `SELECT * FROM PROJECT.DATASET.TABLE LIMIT 100`. You need to specify either an input-table or query. It is recommended to use query when you want to use a public dataset.",
+        "isOptional": true
+      },
+      {
+        "name": "input_table",
+        "label": "BigQuery input table name.",
+        "helpText": "Input BigQuery table for results specified as: PROJECT:DATASET.TABLE or DATASET.TABLE. You need to specify either an input-table or query. It is recommended to use input-table for when you have your own dataset.",
+        "isOptional": true
+      },
+      {
+        "name": "deidentification_template_name",
+        "label": "DLP Structured De-identification Template Name.",
+        "helpText": "Name of the DLP Structured De-identification Template that was used to deidentify data in the BiqQuery source. Format is 'projects/<PROJECT>/locations/<LOCATION>/deidentifyTemplates/<TEMPLATE_ID>'",
+        "regexes": [
+          "projects/[^/]+/locations/[^/]+/deidentifyTemplates/[-_a-zA-Z0-9]+"
+        ]
+      },
+      {
+        "name": "window_interval_sec",
+        "label": "Window interval in seconds.",
+        "helpText": "Window interval in seconds for grouping incoming messages.",
+        "isOptional": true
+      },
+      {
+        "name": "batch_size",
+        "label": "DLP batch size.",
+        "helpText": "Number of records to be sent in a batch in the call to the DLP API.",
+        "isOptional": true
+      },
+      {
+        "name": "dlp_location",
+        "label": "DLP Location.",
+        "helpText": "The Location of the DLP template resource."
+      },
+      {
+        "name": "dlp_project",
+        "label": "DLP Project.",
+        "helpText": "ID of the project that holds the DLP template."
+      },
+      {
+        "name": "bq_schema",
+        "label": "BigQuery table schema.",
+        "helpText": "Output BigQuery table schema specified as string with format: FIELD_1:STRING,FIELD_2:STRING,..."
+      },
+      {
+        "name": "bq_temp_loc",
+        "label": "BigQuery temporary location on GCS",
+        "helpText": "gs://<bucaket>/tmp"
+      },
+      {
+        "name": "output_table",
+        "label": "BigQuery output table name.",
+        "helpText": "Output BigQuery table with reidentified data as: PROJECT:DATASET.TABLE or DATASET.TABLE."
+      }
+    ]
+  }

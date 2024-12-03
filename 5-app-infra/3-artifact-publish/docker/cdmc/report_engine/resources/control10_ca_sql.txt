@@ -1,0 +1,8 @@
+SELECT aiad.asset_name as aiad_asset_name,
+       MAX(ca.approval_date) as last_ca_approval_date,
+FROM `$project_id.{0}.asset_ia_details` as aiad
+JOIN `$project_id.{1}.data_asset` as da ON aiad.asset_name like concat(replace(da.data_asset_name, '*', ''), '%')
+JOIN `$project_id.{1}.use_purpose` as up ON da.data_asset_id = up.data_asset_id
+JOIN `$project_id.{1}.consumer_agreement` as ca ON up.use_id = ca.use_id
+GROUP BY aiad_asset_name
+     

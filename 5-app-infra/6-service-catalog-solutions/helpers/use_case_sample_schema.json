@@ -1,0 +1,51 @@
+[
+    {
+        "name": "Card_Type_Code",
+        "type": "STRING"
+    },
+    {
+        "name": "Card_Type_Full_Name",
+        "type": "STRING",
+        "policyTags": {
+            "names": [
+                "projects/prj-c-bu4-data-governance-xsvw/locations/us-central1/taxonomies/4774403280594381017/policyTags/792474792483893757"
+            ]
+        }
+    },
+    {
+        "name": "Issuing_Bank",
+        "type": "STRING"
+    },
+    {
+        "name": "Card_Number",
+        "type": "STRING"
+    },
+    {
+        "name": "Card_Holders_Name",
+        "type": "STRING"
+    },
+    {
+        "name": "CVV_CVV2",
+        "type": "STRING"
+    },
+    {
+        "name": "Issue_Date",
+        "type": "STRING"
+    },
+    {
+        "name": "Expiry_Date",
+        "type": "STRING"
+    },
+    {
+        "name": "Billing_Date",
+        "type": "STRING"
+    },
+    {
+        "name": "Card_PIN",
+        "type": "STRING"
+    },
+    {
+        "name": "Credit_Limit",
+        "type": "STRING"
+    }
+]

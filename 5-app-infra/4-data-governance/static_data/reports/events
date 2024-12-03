@@ -1,0 +1,36 @@
+[
+  {
+    "fields": [
+      {
+        "name": "uuid",
+        "type": "STRING"
+      },
+      {
+        "name": "Controls",
+        "type": "STRING"
+      }
+    ],
+    "name": "reportMetadata",
+    "type": "RECORD"
+  },
+  {
+    "name": "CdmcControlNumber",
+    "type": "INTEGER"
+  },
+  {
+    "name": "Findings",
+    "type": "STRING"
+  },
+  {
+    "name": "DataAsset",
+    "type": "STRING"
+  },
+  {
+    "name": "RecommendedAdjustment",
+    "type": "STRING"
+  },
+  {
+    "name": "ExecutionTimestamp",
+    "type": "TIMESTAMP"
+  }
+]

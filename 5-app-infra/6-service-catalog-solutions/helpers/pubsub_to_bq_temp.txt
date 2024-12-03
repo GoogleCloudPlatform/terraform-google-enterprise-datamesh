@@ -1,0 +1,5 @@
+{
+  image_name            = "us-central1-docker.pkg.dev/prj-c-bu4-artifacts-fgsn/flex-templates/samples/pubsub_to_bq_deidentification:development"
+  template_filename     = "gs://bkt-prj-c-bu4-artifacts-fgsn-us-central1-tpl-b47e/flex-template-samples/pubsub_to_bq_deidentification-development.json"
+  additional_parameters = {}
+}

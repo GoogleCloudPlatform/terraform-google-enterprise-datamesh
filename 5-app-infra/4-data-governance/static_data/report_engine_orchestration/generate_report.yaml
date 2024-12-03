@@ -1,0 +1,21 @@
+main:
+    steps:
+        - generate_report:
+            call: googleapis.cloudbuild.v1.projects.builds.create
+            args:
+                projectId: "${project_id_gov}"
+                parent: "projects/${project_id_gov}/locations/global"
+                body:
+                    serviceAccount: "projects/${project_id_gov}/serviceAccounts/${cloud_run_sa}"
+                    options:
+                        logging: CLOUD_LOGGING_ONLY
+                    steps:
+                      - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+                        entrypoint: /bin/bash
+                        args: 
+                          - "-c"
+                          - |
+                              TOKEN=$(gcloud auth print-identity-token --account='${cloud_run_sa}' --audiences='${report_engine_url}' 2>&1) 
+                              curl -X POST -H "Authorization: Bearer $$${TOKEN}" \
+                              '${report_engine_url}${report_engine_endpoint}'
+            result: gcloud_result

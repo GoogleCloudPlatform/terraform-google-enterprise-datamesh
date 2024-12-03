@@ -1,0 +1,4 @@
+{"sensitive_category":"Personal_Identifiable_Information","geographical_region":"us-central1","retention_period_days":"1","expiration_action":"Archive"}
+{"sensitive_category":"Sensitive_Personal_Information","geographical_region":"us-central1","retention_period_days":"180","expiration_action":"Archive"}
+{"sensitive_category":"Personal_Information","geographical_region":"us-central1","retention_period_days":"180","expiration_action":"Archive"}
+{"sensitive_category":"Sensitive_Personal_Identifiable_Information","geographical_region":"us-central1","retention_period_days":"60","expiration_action":"Purge"}

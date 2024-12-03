@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+  <head>
+    <title>Tag Engine for Data Catalog</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+  </head>  
+    <body>
+	   <div class="pagetitle">
+	      <h1>Create Config</h1>
+       </div>
+	   
+		   <h5>The import config lets you create and populate Data Catalog tags from one or more CSV files. <br>
+  			   For table-level tags, the CSV must have these three fields: project, dataset, and table.<br>
+			   For column-level tags, the CSV must have these four fields: project, dataset, table, and column.<br> 
+			   The remaining fields in the CSV are for each of the tag template fields to be included in the tags. <br> 
+			   <br>
+			   The top line of the file is reserved for headers (i.e. project, dataset, table, etc.). <br>
+			   The headers of the tagged fields are their field ID from the tag template.<br>
+			   Note: The content of a CSV file is scoped to one tag template. <br>
+			   Here are some sample CSVs: <a href="https://github.com/GoogleCloudPlatform/datacatalog-tag-engine/blob/cloud-run/examples/configs/import/bigquery_table_tags.csv">table-level CSV</a>, <a href="https://github.com/GoogleCloudPlatform/datacatalog-tag-engine/blob/cloud-run/examples/configs/import/bigquery_column_tags.csv">column-level CSV</a>
+			    <br><br>
+			   
+			   Mandatory fields in this form are marked by <span style="color:red;">*</span></h5>
+
+	   </div>
+	   <form method="post" action="/process_import_config"> 
+
+	   <h3>Tag Template Details</h3>
+   	<table> 
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Id:&nbsp;</td>
+	   <td>
+       	  <input type="text" name="template_id" value="{{ template_id }}" style="width: 150px;padding: 3px;"/>			 
+       </td>
+       </tr>
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Project:&nbsp;</td>
+	   <td>
+       	  <input type="text" name="template_project" value="{{ template_project }}" style="width: 150px;padding: 3px;"/>			 
+       </td>
+       </tr>
+   	<tr>
+       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Tag Template Region:&nbsp;</td>
+	   <td>
+       	  <input type="text" name="template_region" value="{{ template_region }}" style="width: 150px;padding: 3px;"/>			 
+       </td>
+       </tr>
+       </table>
+		<p>&nbsp;</p>
+		   <h3>Data Asset Details</h3>
+	   	<table> 
+	   	<tr>
+	       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Data Asset Type:&nbsp;</td>
+		   <td>
+			  <select name="data_asset_type" style="width: 150px;padding: 3px;">
+			    <option value="bigquery" selected>bigquery</option>
+				<option value="fileset">fileset</option>
+				<option value="spanner">spanner</option>
+			  </select>			 
+	       </td>
+	       </tr>
+	   	<tr>
+	       <td>&nbsp;<span style="color:red;">*</span>&nbsp;Data Asset Region:&nbsp;</td>
+		   <td>
+	       	  <input type="text" name="data_asset_region" value="{{ data_asset_region }}" style="width: 150px;padding: 3px;"/>			 
+	       </td>
+	       </tr>
+		</table>
+		<p>&nbsp;</p>   
+		<h3>GCS Path to CSV Files</h3>
+		 	   <h5>		   
+  			  
+			   &nbsp;&nbsp;If you have multiple files to upload, use a comma-separated list. Example: gs://bucket/folder/tags1.csv, 
+			   			   gs://bucket/folder/tags2.csv, etc. You can also use wildcards in the path. Example: gs://bucket/folder/*.csv.
+
+		   		</h5>
+					    <table>
+				     <tr>
+				    <td><span style="color:red;">*</span>&nbsp;Location of metadata file(s) to import:&nbsp;&nbsp;
+				    	  <input type="text" value="gs://" name="metadata_import_location" style="align-content:left; width: 600px; overflow:auto;"/>
+
+				    	</td>
+				     </tr>
+			    </table>
+				
+			<p>&nbsp;</p>
+		    <h3>Tag History Option:</h3>
+			
+		    <table>
+		    <tr><td>&nbsp;&nbsp;
+			{% if tag_history_option %}
+				ON
+			{% else %}
+				OFF
+			{% endif %}
+		    </td></tr>
+		    </table>	
+			    
+				
+	         <p>&nbsp;</p>
+		        <table>
+		        <tr>
+			   <td><input type="submit" value="Create Config" name="action">
+			       <input type="submit" value="Cancel Changes" name="action">
+				   
+				   <input type="hidden" name="template_id" value="{{ template_id }}">
+				   <input type="hidden" name="template_project" value="{{ template_project }}">
+				   <input type="hidden" name="template_region" value="{{ template_region }}">
+				   <input type="hidden" name="service_account" value="{{ service_account }}">
+			   </td>
+		        </tr>
+			   </table>	   
+         </form>
+    </body>
+</html>
