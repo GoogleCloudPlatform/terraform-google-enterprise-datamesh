@@ -47,7 +47,7 @@ pyparsing==3.2.0
 pytest==8.3.3
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
-python-multipart==0.0.12
+python-multipart==0.0.18
 PyYAML==6.0.2
 requests==2.32.3
 requests-oauthlib==2.0.0
