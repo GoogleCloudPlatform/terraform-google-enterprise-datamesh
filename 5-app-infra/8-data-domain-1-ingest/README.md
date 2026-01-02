@@ -206,11 +206,11 @@ Before proceeding on with the data ingestion process, we need to encrypt data fr
 
    export data_ingestion_bucket=$(terraform -chdir="../gcp-projects/business_unit_4/nonproduction" output -json data_ingestion_buckets | jq -r '."domain-1"')
    ```
-1. Use the `gsutil cp` command to upload each encrypted CSV file to the specified GCS bucket:
+1. Use the `gcloud storage cp` command to upload each encrypted CSV file to the specified GCS bucket:
    ```bash
-   gsutil cp encrypted_data/sample-100-encrypted.csv ${data_ingestion_bucket}/sample-100-encrypted.csv
-   gsutil cp encrypted_data/NewCust.csv ${data_ingestion_bucket}/NewCust.csv
-   gsutil cp encrypted_data/UpdCust.csv ${data_ingestion_bucket}/UpdCust.csv
+   gcloud storage cp encrypted_data/sample-100-encrypted.csv ${data_ingestion_bucket}/sample-100-encrypted.csv
+   gcloud storage cp encrypted_data/NewCust.csv ${data_ingestion_bucket}/NewCust.csv
+   gcloud storage cp encrypted_data/UpdCust.csv ${data_ingestion_bucket}/UpdCust.csv
    ```
 
 ## Deployment Continued...
@@ -327,11 +327,11 @@ The instructions provided here will demonstrate actions needed for a production 
 
    echo "data_ingestion_bucket: ${data_ingestion_bucket}"
    ```
-1. Use the `gsutil cp` command to upload each encrypted CSV file to the specified GCS bucket:
+1. Use the `gcloud storage cp` command to upload each encrypted CSV file to the specified GCS bucket:
    ```bash
-   gsutil cp encrypted_data/sample-100-encrypted.csv ${data_ingestion_bucket}/sample-100-encrypted.csv
-   gsutil cp encrypted_data/NewCust.csv ${data_ingestion_bucket}/NewCust.csv
-   gsutil cp encrypted_data/UpdCust.csv ${data_ingestion_bucket}/UpdCust.csv
+   gcloud storage cp encrypted_data/sample-100-encrypted.csv ${data_ingestion_bucket}/sample-100-encrypted.csv
+   gcloud storage cp encrypted_data/NewCust.csv ${data_ingestion_bucket}/NewCust.csv
+   gcloud storage cp encrypted_data/UpdCust.csv ${data_ingestion_bucket}/UpdCust.csv
    ```
 
 1. Create a PR request from `nonproduction` to `production` in your GitHub Repository
