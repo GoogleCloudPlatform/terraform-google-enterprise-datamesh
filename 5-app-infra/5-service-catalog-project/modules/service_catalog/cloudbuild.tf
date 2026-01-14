@@ -89,8 +89,8 @@ resource "google_cloudbuild_trigger" "solutions" {
     }
     step {
       id   = "push-to-bucket"
-      name = "gcr.io/cloud-builders/gsutil"
-      args = ["cp", "/workspace/*.tar.gz", "gs://${google_storage_bucket.solutions_bucket.name}/modules/"]
+      name = "gcr.io/cloud-builders/gcloud"
+      args = ["storage", "cp", "/workspace/*.tar.gz", "gs://${google_storage_bucket.solutions_bucket.name}/modules/"]
     }
 
     logs_bucket = "gs://${google_storage_bucket.log_bucket.name}"
